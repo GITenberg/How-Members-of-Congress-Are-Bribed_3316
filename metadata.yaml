@@ -1,0 +1,26 @@
+_repo: How-Members-of-Congress-Are-Bribed_3316
+_version: 0.0.1
+creator:
+  author:
+    agent_name: Moore, J. Hampton (Joseph Hampton)
+    alias: Moore, Joseph Hampton
+    birthdate: 1864
+    deathdate: 1950
+    gutenberg_agent_id: '1173'
+    url: http://www.gutenberg.org/2009/agents/1173
+description: ''
+gutenberg_issued: '2002-07-01'
+gutenberg_type: Text
+identifiers:
+  gutenberg: '3316'
+language: en
+publisher: Project Gutenberg
+rights: Public domain in the USA.
+rights_url: http://creativecommons.org/about/pdm
+subjects:
+- !lcc 'JK'
+- !lcsh 'United States. Congress'
+- !lcsh 'Bribery'
+- GITenberg
+title: How Members of Congress Are Bribed
+url: http://www.gutenberg.org/ebooks/3316
