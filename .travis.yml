@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: U1CYLMfH3p3kKHRFPHa8l4hKtfXEp12Vz4NX9qzAQne5K7OS0m3h62V7kQsIr6RdJaf6uG4mmkCM6i9T4saye7LE3MJco6JBd7HpruLxbet1dg80pW/F1jwpaDjpMQit97vYTjdEdvy9GGDkKLZaLq6jx52ZZCYg2uhfD5/lhWcl6phZYhhdw8KkWx9K1cRav77R4XKWIwfdtnci7KFPm4/kkJgDyuRpzavSGNFU5aa+YHVJ4ygHBCZdknyQiXKGjmQMFS6BoR3XNWou4q52AgpFdLfmKcNtc7rhRfmEhU7tl5PXj6hNX/0qEO2lGVOdh4qggThyruFWnyFzeaVFn3VnkhdI8HFgyjwAoSwIYWNEEzZhEdGCGWtzgNa0J9bEhuPjfMG7v0/vvsQv6FymMqfk+xHl+TAjiSLkeqrLrb5rPRp79JAhTX9GzAczOSxwnjiT3LSpmBg47gycxBWfh6SIyEJg2ebGEYRpmjYqKS+oO5+YLY/RM5TGVK0EAcVV64YZOkk2MWMmdbaN4PxK4p8GeRW+T5sd3MPsoBQ1ach6csMYx8Nh53tLFNSaTYEyXHU7IFu55JeoaMGSm5KAKldayr8GzL9AX5TV9bLP1RwOc8nvSC9VlHTpXAcecSDQ+3VfJ8xzb9G4WodOQXcvdcpDcIoO40ahgzM487SCATA=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/How-Members-of-Congress-Are-Bribed_3316
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
